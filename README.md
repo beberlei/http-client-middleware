@@ -105,8 +105,8 @@ $response = $client->send($request);
 
 Optional interface when you want your client to be async. Uses promises
 response that looks exactly the same as [React
-Promises](https://github.com/reactphp/promise) to avoid having to build a new
-one.
+Promises](https://github.com/reactphp/promise) to allow duck-typing and using
+this instead of having to create a promise library.
 
 This interface requires PHP 5.4 because of the callable typehint.
 
@@ -142,4 +142,15 @@ interface PromiseInterface
      */
     public function then(callable $onFulfilled = null, callable $onRejected = null, callable $onProgress = null);
 }
+```
+
+Example:
+
+```php
+<?php
+
+$asyncClient = createAsyncHttpClient();
+$asyncClient->requestAsync('GET', 'http://php.net')->then(function ($response) {
+    var_dump((string)$response->getBody());
+});
 ```

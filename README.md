@@ -11,8 +11,9 @@ them is optional!
 
 ## A Simple Http Client
 
-Very simple http client interface that avoids factories by specifing
-all request variables directly.
+Very simple http client interface that avoids factories by specifing all
+request variables directly. It intentionally gets some of the data from an
+untyped array for simplicity.
 
 ```php
 <?php
@@ -130,7 +131,7 @@ interface PromiseInterface
 }
 ```
 
-## RequestFilter and ResposneFilter for Plugins (OAuth, HTTP-Basic, ...)
+## RequestFilter and ResponseFilter for Plugins
 
 If your HTTP client supports plugins, use these interfaces to allow others to
 easily plugin into all libraries that support them.
@@ -156,3 +157,6 @@ interface ResponseFilterInterface
     public function filterResponse(Response $response);
 }
 ```
+
+Another approach to plug into clients without plugin support is using a
+decorator ``ClientInterface``.

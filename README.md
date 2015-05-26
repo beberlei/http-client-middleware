@@ -89,7 +89,7 @@ $request = $client->createRequest();
 $response = $client->send($request);
 ```
 
-## Asynchronuous Http-Client
+## Asynchronous Http-Client
 
 Optional interface when you want your client to be async. Uses promises
 response that looks exactly the same as [React

@@ -1,7 +1,13 @@
 # HttpClient Middleware for PSR-7
 
 Missing interfaces for HTTP-Client middlewares using PSR-7 messages.
-There are four 
+
+The goal is to provide interfaces that you can depend on in your applications
+and non-http libraries. This way we can implement independent code and everyone
+can use whatever HTTP client he wants.
+
+There are four abstractions/levels of implementation possible. Every one of
+them is optional!
 
 ## A Simple Http Client
 

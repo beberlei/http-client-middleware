@@ -6,7 +6,7 @@ The goal is to provide interfaces that you can depend on in your applications
 and non-http libraries. This way we can implement independent code and everyone
 can use whatever HTTP client he wants.
 
-There are four abstractions/levels of implementation possible. Every one of
+There are three abstractions/levels of implementation possible. Every one of
 them is optional!
 
 ## A Simple Http Client
@@ -24,7 +24,7 @@ interface SimpleClientInterface
      * @param string $method
      * @param string|UriInterface $uri
      * @param array $options - Vendor-specific options, don't rely on for interop.
-     * 
+     *
      * Standard compliant client must implement the following options:
      *
      * - "headers" is a list of headers, for example ["Content-Type: application/json"]
@@ -48,7 +48,7 @@ $response = $client->request('GET', 'http://php.net');
 ## Http Client Interface
 
 A more flexible HTTP client allows access to the Request object
-and provides a factory to create Request and Uri objects to 
+and provides a factory to create Request and Uri objects to
 hide the underyling implementation.
 
 ```php
@@ -97,6 +97,8 @@ response that looks exactly the same as [React
 Promises](https://github.com/reactphp/promise) to avoid having to build a new
 one.
 
+This interface requires PHP 5.4 because of the callable typehint.
+
 ```php
 <?php
 interface AsyncClientInterface
@@ -130,33 +132,3 @@ interface PromiseInterface
     public function then(callable $onFulfilled = null, callable $onRejected = null, callable $onProgress = null);
 }
 ```
-
-## RequestFilter and ResponseFilter for Plugins
-
-If your HTTP client supports plugins, use these interfaces to allow others to
-easily plugin into all libraries that support them.
-
-For plugin authors, implement these interfaces and instantly work with all
-HTTP Clients that use the HttpClient Middleware.
-
-```php
-<?php
-interface RequestFilterInterface
-{
-    /**
-     * @return \Psr\Http\Message\Request $request
-     */
-    public function filterRequest(Request $request);
-}
-
-interface ResponseFilterInterface
-{
-    /**
-     * @return \Psr\Http\Message\Request $request
-     */
-    public function filterResponse(Response $response);
-}
-```
-
-Another approach to plug into clients without plugin support is using a
-decorator ``ClientInterface``.

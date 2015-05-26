@@ -1,0 +1,11 @@
+{
+    "name": "beberlei/http-client-middleware",
+    "description": "The missing http client middleware interfaces for PSR-7",
+    "license": "MIT",
+    "require": {
+        "psr/http-message": "@stable"
+    },
+    "autoload": {
+        "psr-0": {"Http\\Client": "src/"}
+    }
+}

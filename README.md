@@ -56,6 +56,17 @@ hide the underyling implementation.
 interface ClientInterface
 {
     /**
+     * @param \Psr\Http\Message\RequestInterface $request
+     * @param array $options - Vendor-specific options, don't rely on for interop.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function send(RequestInterface $request, array $options = []);
+}
+
+interface RequestFactoryInterface
+{
+    /**
      * @return \Psr\Http\Message\RequestInterface
      */
     public function createRequest();
@@ -67,12 +78,11 @@ interface ClientInterface
     public function createUri($uri = null);
 
     /**
-     * @param \Psr\Http\Message\RequestInterface $request
-     * @param array $options - Vendor-specific options, don't rely on for interop.
-     *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param mixed $data
+     * @throws \InvalidArgumentException When passed data cannot be converted to a stream.
+     * @return \Psr\Http\Message\StreamInterface
      */
-    public function send(RequestInterface $request, array $options = []);
+    public function createStream($data);
 }
 ```
 
@@ -82,9 +92,10 @@ Usage:
 <?php
 
 $client = createMyHttpClient();
-$request = $client->createRequest();
+$factory = createMyClientFactory();
+$request = $factory->createRequest();
     ->withMethod('GET')
-    ->withUri($client->createUri("http://php.net"))
+    ->withUri($factory->createUri("http://php.net"))
     ->withHeader("X-Foo", "Bar");
 
 $response = $client->send($request);

@@ -18,17 +18,6 @@ use Psr\Http\Message\RequestInterface;
 interface ClientInterface
 {
     /**
-     * @return \Psr\Http\Message\RequestInterface
-     */
-    public function createRequest();
-
-    /**
-     * @param string $uri - If uri is provided the result of parse_url() is set as parts for UriInterface
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function createUri($uri = null);
-
-    /**
      * @param \Psr\Http\Message\RequestInterface $request
      * @param array $options - Vendor-specific options, don't rely on for interop.
      *
